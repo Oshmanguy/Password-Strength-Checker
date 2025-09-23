@@ -8,7 +8,6 @@ def contianUpper(password):
 
 
 #check if contains special characters
-
 def containSpecial(password):
 
     specialPattern = re.compile(r'[^\w\s]')  
@@ -17,6 +16,11 @@ def containSpecial(password):
         return True
     else:
         return False
+    
+
+#check if contains numbers 
+def containNumbers(password):
+    return any(char.isdigit() for char in password)
 
 
 
@@ -51,9 +55,13 @@ def finalPasswordStrengthCheck(password):
     if containSpecial(password):
         finalPasswordScore = finalPasswordScore + 1
 
+    if containNumbers(password):
+        finalPasswordScore = finalPasswordScore + 1
+
     finalPasswordScore += checkLength(password)
 
-    
+    print(finalPasswordScore)
+
     if finalPasswordScore >= 4:
         return "Strong"
     elif finalPasswordScore == 2:
