@@ -6,6 +6,10 @@ import re
 def contianUpper(password):
     return any(char.isupper() for char in password)
 
+#check if contains lower
+def containLower(password):
+    return any(char.islower() for char in password)
+
 
 #check if contains special characters
 def containSpecial(password):
@@ -49,12 +53,19 @@ def finalPasswordStrengthCheck(password):
     #calculate final strength based on integer score 
     finalPasswordScore = 0
     
+    #Count up score for containing lowercase chars
+    if containLower(password):
+        finalPasswordScore = finalPasswordScore + 1
+
+    #Count up score for containing uppercase chars
     if contianUpper(password):
         finalPasswordScore = finalPasswordScore + 1
 
+    #Count up score for containing special chars
     if containSpecial(password):
         finalPasswordScore = finalPasswordScore + 1
 
+    #Count up score for containing
     if containNumbers(password):
         finalPasswordScore = finalPasswordScore + 1
 
@@ -62,12 +73,13 @@ def finalPasswordStrengthCheck(password):
 
     print(finalPasswordScore)
 
-    if finalPasswordScore >= 4:
+    if finalPasswordScore >= 6:
         return "Strong"
-    elif finalPasswordScore == 2:
+    elif finalPasswordScore == 4 :
         return "Moderate"
-    elif finalPasswordScore <= 1:
+    elif finalPasswordScore <= 3:
         return "Weak"
+
 
 #--------------------MAIN------------------------------------------------------------
 
