@@ -1,4 +1,5 @@
 import re 
+import math as m
 
 #check diffrent variables of password 
 
@@ -44,7 +45,31 @@ def checkLength(password):
     #Bad
     if passLength < 8:
         return 0
+    
+    #Entropy Calculation 
+    def entropyCalc(lengthOfPass, poolSize):
 
+        #calculate entropy 
+        entropy = m.log2((poolSize ** lengthOfPass))
+
+        return entropy
+    
+    #function that calculats pool size for entrophy calculation 
+    def calcPoolSize(password):
+
+        #Start pool size at zero
+        poolSize = 0
+
+        if password.containUpper(password):
+            poolSize = poolSize + 26 #add 26 to pool since thats how many letters are in alphabet 
+        elif password.containLower(password):
+            poolSize = poolSize + 26 #same reason, 26 upper case letters 
+        elif password.containSpecial(password):
+            poolSize = poolSize + 32 #there are 32 special characters on the average keyboard 
+        elif password.containNumbers(password):
+            poolSize = poolSize + 10 #there are 10 numbers to choose from on the keyboard 
+
+        return poolSize 
 
 
 #Give user final review on password 
