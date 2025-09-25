@@ -103,7 +103,11 @@ def finalPasswordStrengthCheck(password):
         return "Moderate"
     elif finalPasswordScore <= 3:
         return "Weak"
-        
+    else:
+        return "Moderate"#fix later  
+    
+
+
 def weakness(password):
     if contianUpper(password) == False:
         print("Missing Uppercase")
