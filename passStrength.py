@@ -46,30 +46,29 @@ def checkLength(password):
     if passLength < 8:
         return 0
     
-    #Entropy Calculation 
-    def entropyCalc(lengthOfPass, poolSize):
+#Entropy Calculation 
+def entropyCalc(lengthOfPass, poolSize):
 
-        #calculate entropy 
-        entropy = m.log2((poolSize ** lengthOfPass))
+    #calculate entropy 
+    return m.log2((poolSize ** lengthOfPass))
 
-        return entropy
     
-    #function that calculats pool size for entrophy calculation 
-    def calcPoolSize(password):
+#function that calculats pool size for entrophy calculation 
+def calcPoolSize(password):
 
-        #Start pool size at zero
-        poolSize = 0
+    #Start pool size at zero
+    poolSize = 0
 
-        if password.containUpper(password):
-            poolSize = poolSize + 26 #add 26 to pool since thats how many letters are in alphabet 
-        elif password.containLower(password):
-            poolSize = poolSize + 26 #same reason, 26 upper case letters 
-        elif password.containSpecial(password):
-            poolSize = poolSize + 32 #there are 32 special characters on the average keyboard 
-        elif password.containNumbers(password):
-            poolSize = poolSize + 10 #there are 10 numbers to choose from on the keyboard 
+    if contianUpper(password):
+        poolSize = poolSize + 26 #add 26 to pool since thats how many letters are in alphabet 
+    if containLower(password):
+        poolSize = poolSize + 26 #same reason, 26 upper case letters 
+    if containSpecial(password):
+        poolSize = poolSize + 32 #there are 32 special characters on the average keyboard 
+    if containNumbers(password):
+        poolSize = poolSize + 10 #there are 10 numbers to choose from on the keyboard 
 
-        return poolSize 
+    return poolSize 
 
 
 #Give user final review on password 
@@ -109,4 +108,11 @@ def finalPasswordStrengthCheck(password):
 #--------------------MAIN------------------------------------------------------------
 
 userPassword = input("Enter a the password you would like checked: ")
+
+#assign entropy to a variable 
+entropy = entropyCalc(len(userPassword), calcPoolSize(userPassword))
+
+
+
 print(finalPasswordStrengthCheck(userPassword))
+print(f"Entropy: {entropy:.2f} bits")
