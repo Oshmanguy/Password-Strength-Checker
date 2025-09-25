@@ -1,6 +1,8 @@
 import re 
 import math as m
 
+
+
 #check diffrent variables of password 
 
 #check if contains uppercase 
@@ -95,15 +97,22 @@ def finalPasswordStrengthCheck(password):
 
     finalPasswordScore += checkLength(password)
 
-    print(finalPasswordScore)
-
     if finalPasswordScore >= 6:
         return "Strong"
     elif finalPasswordScore == 4 :
         return "Moderate"
     elif finalPasswordScore <= 3:
         return "Weak"
-
+        
+def weakness(password):
+    if contianUpper(password) == False:
+        print("Missing Uppercase")
+    if containLower(password) == False:
+        print("Missing lowercase")
+    if containNumbers(password) == False:
+        print("Missing Numbers")
+    if containSpecial(password) == False:
+        print("Missing Special Characters")
 
 #--------------------MAIN------------------------------------------------------------
 
@@ -112,7 +121,8 @@ userPassword = input("Enter a the password you would like checked: ")
 #assign entropy to a variable 
 entropy = entropyCalc(len(userPassword), calcPoolSize(userPassword))
 
+print("Password Strength: " + str(finalPasswordStrengthCheck(userPassword)))
+print("Reason: ")
+weakness(userPassword)
+print(f"Estimated Entropy: {entropy:.2f} bits")
 
-
-print(finalPasswordStrengthCheck(userPassword))
-print(f"Entropy: {entropy:.2f} bits")
