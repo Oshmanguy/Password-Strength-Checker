@@ -76,35 +76,13 @@ def calcPoolSize(password):
 #Give user final review on password 
 def finalPasswordStrengthCheck(password):
 
-    #calculate final strength based on integer score 
-    finalPasswordScore = 0
-    
-    #Count up score for containing lowercase chars
-    if containLower(password):
-        finalPasswordScore = finalPasswordScore + 1
-
-    #Count up score for containing uppercase chars
-    if contianUpper(password):
-        finalPasswordScore = finalPasswordScore + 1
-
-    #Count up score for containing special chars
-    if containSpecial(password):
-        finalPasswordScore = finalPasswordScore + 1
-
-    #Count up score for containing
-    if containNumbers(password):
-        finalPasswordScore = finalPasswordScore + 1
-
-    finalPasswordScore += checkLength(password)
-
-    if finalPasswordScore >= 6:
-        return "Strong"
-    elif finalPasswordScore == 4 :
-        return "Moderate"
-    elif finalPasswordScore <= 3:
+    if entropy <= 28:
         return "Weak"
+    elif 29 <= entropy <= 59:
+        return "Moderate"
     else:
-        return "Moderate"#fix later  
+        return "Strong"
+    
     
 
 
