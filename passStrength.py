@@ -84,17 +84,23 @@ def finalPasswordStrengthCheck(password):
         return "Strong"
     
     
-
-
 def weakness(password):
+
+    missingStrengths = [] #empty list, append values as see fits 
+
+
     if contianUpper(password) == False:
-        print("Missing Uppercase")
+        missingStrengths.append("Uppercase")
     if containLower(password) == False:
-        print("Missing lowercase")
+        missingStrengths.append("Lowercase")
     if containNumbers(password) == False:
-        print("Missing Numbers")
+        missingStrengths.append("Numbers")
     if containSpecial(password) == False:
-        print("Missing Special Characters")
+        missingStrengths.append("Special Characters")
+
+    return missingStrengths
+
+
 
 #--------------------MAIN------------------------------------------------------------
 
@@ -104,7 +110,6 @@ userPassword = input("Enter a the password you would like checked: ")
 entropy = entropyCalc(len(userPassword), calcPoolSize(userPassword))
 
 print("Password Strength: " + str(finalPasswordStrengthCheck(userPassword)))
-print("Reason: ")
-weakness(userPassword)
+print("Missing: "+ str(weakness(userPassword)))
 print(f"Estimated Entropy: {entropy:.2f} bits")
 
