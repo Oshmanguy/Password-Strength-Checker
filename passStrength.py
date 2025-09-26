@@ -109,7 +109,11 @@ userPassword = input("Enter a the password you would like checked: ")
 #assign entropy to a variable 
 entropy = entropyCalc(len(userPassword), calcPoolSize(userPassword))
 
+print("")
+print("---------------------------------------------------")
 print("Password Strength: " + str(finalPasswordStrengthCheck(userPassword)))
 print("Missing: "+ str(weakness(userPassword)))
 print(f"Estimated Entropy: {entropy:.2f} bits")
+print("---------------------------------------------------")
+print("")
 
