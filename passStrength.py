@@ -103,10 +103,12 @@ def weakness(password):
 
 #fix this later
 def load_wordlist():
-    with open("wordlists/10k-most-common.txt", "r", encoding="utf-8") as f:
-        words = [line.strip() for line in f]
-    return set(words)
+    common_passwords = []
+    with open("wordlists/10k-most-common.txt", "r", encoding="utf-8") as file:
+        common_passwords = [common_passwords.strip() for common_passwords in file]
+    return common_passwords
 
+print(load_wordlist())
 
 
 #--------------------MAIN------------------------------------------------------------
