@@ -109,8 +109,15 @@ def hashPassword(userPassword):
 
     hashedPass = sha1_hasher.hexdigest() #convert from bytes to hexadecimal string 
 
-    
     return hashedPass
+
+#returns the first 5 characters in the string of the hashed password 
+def fiveCharsOfHash(hashedPassword):
+
+    full_hash = hashedPassword
+
+    return full_hash[0:5]
+
 
 
 
@@ -174,5 +181,6 @@ print(f"Estimated Entropy: {entropy:.2f} bits")
 print(checkForCommonPass(userPassword))
 print("---------------------------------------------------")
 print(hashPassword(userPassword))
+print(fiveCharsOfHash(hashPassword(userPassword)))
 print("")
 
