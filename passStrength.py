@@ -1,5 +1,7 @@
 import re 
 import math as m
+import hashlib 
+import requests
 
 
 
@@ -94,6 +96,32 @@ def checkForCommonPass(userPassword):
     else:
         print("IS NOT ON LIST")
         return False
+    
+
+#Function that makes a hash out of the user given password using the SHA-1 algorithm 
+def hashPassword(userPassword):
+
+    sha1_hasher = hashlib.sha1() #create "hasher" for the sha1 algorithm 
+
+    encoded_string = userPassword.encode('utf-8') #encode stringt to bytes using UTF-8
+
+    sha1_hasher.update(encoded_string) #give hashing algorithm the string/password
+
+    hashedPass = sha1_hasher.hexdigest() #convert from bytes to hexadecimal string 
+
+    
+    return hashedPass
+
+
+
+
+
+
+
+
+
+
+
 
 
 #Give user final review on password 
@@ -145,5 +173,6 @@ print("Missing: "+ str(weakness(userPassword)))
 print(f"Estimated Entropy: {entropy:.2f} bits")
 print(checkForCommonPass(userPassword))
 print("---------------------------------------------------")
+print(hashPassword(userPassword))
 print("")
 
