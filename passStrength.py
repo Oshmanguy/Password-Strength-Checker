@@ -72,9 +72,37 @@ def calcPoolSize(password):
 
     return poolSize 
 
+#fix load list of common passwords and store them into a list 
+def load_wordlist():
+    common_passwords = []
+    with open("wordlists/10k-most-common.txt", "r", encoding="utf-8") as file:
+        common_passwords = [line.strip() for line in file]
+    return common_passwords
+
+
+#print(load_wordlist())#TESTING GET RID OF LATER 
+
+#This function will check the common password list to see if it matches any of the common passwords 
+def checkForCommonPass(userPassword):
+
+    wordlist = load_wordlist()#create wordlist to hold all passwords
+
+
+    if userPassword in wordlist: #lookup of O(1) instead of for loop 
+        print("IS ON LIST")
+        return True
+    else:
+        print("IS NOT ON LIST")
+        return False
+
 
 #Give user final review on password 
 def finalPasswordStrengthCheck(password):
+
+    #check if password matches the list of common passwords before anything 
+    if checkForCommonPass(password):
+        return "Weak"
+
 
     if entropy <= 28:
         return "Weak"
@@ -101,23 +129,6 @@ def weakness(password):
     return missingStrengths
 
 
-#fix load list of common passwords and store them into a list 
-def load_wordlist():
-    common_passwords = []
-    with open("wordlists/10k-most-common.txt", "r", encoding="utf-8") as file:
-        common_passwords = [common_passwords.strip() for common_passwords in file]
-    return common_passwords
-
-
-#print(load_wordlist())#TESTING GET RID OF LATER 
-
-#This function will check the common password list to see if it matches any of the common passwords 
-def checkForCommonPass(userPassword):
-    for password in load_wordlist():
-        if password == userPassword:
-            return "Your password is too common."
-        else:
-            return "Good choice!"
 
 
 #--------------------MAIN------------------------------------------------------------
