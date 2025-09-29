@@ -109,7 +109,7 @@ def hashPassword(userPassword):
 
     hashedPass = sha1_hasher.hexdigest() #convert from bytes to hexadecimal string 
 
-    return hashedPass
+    return hashedPass.upper() #RETURN AS ALL UPPERCASE
 
 #returns the first 5 characters in the string of the hashed password 
 def fiveCharsOfHash(hashedPassword):
@@ -118,13 +118,36 @@ def fiveCharsOfHash(hashedPassword):
 
     return full_hash[0:5]
 
+#returns the rest of the chars aka the suffix
+def suffixOfHash(hashedPassword):
+
+    full_hash = hashedPassword
+
+    return full_hash[5:]
+
+
+def get_pwned_suffixes(prefix):
+
+    url = f"https://api.pwnedpasswords.com/range/{prefix}"
+
+    headers = {"User-Agent": "MyPasswordChecker/1.0 (Oshmanguy)"}
+
+    response = requests.get(url, headers=headers, timeout=10)
+    response.raise_for_status()#raise HTTP error if the request fails 
+
+    return response.text 
 
 
 
 
+def check_pwned_passwords(userPassword):
 
-
-
+    if not userPassword:
+        return 0
+    
+    
+    body = get_pwned_suffixes(fiveCharsOfHash(hashPassword(userPassword)))
+    return body
 
 
 
@@ -182,5 +205,7 @@ print(checkForCommonPass(userPassword))
 print("---------------------------------------------------")
 print(hashPassword(userPassword))
 print(fiveCharsOfHash(hashPassword(userPassword)))
+print(suffixOfHash(hashPassword(userPassword)))
 print("")
+print(check_pwned_passwords(userPassword))
 
