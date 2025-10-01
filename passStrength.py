@@ -145,9 +145,17 @@ def check_pwned_passwords(userPassword):
     if not userPassword:
         return 0
     
-    
     body = get_pwned_suffixes(fiveCharsOfHash(hashPassword(userPassword)))
-    return body
+
+    for line in body.splitlines(fiveCharsOfHash(hashPassword(userPassword))):
+        hash_sufix, count = line.split(":")
+        
+        if hash_sufix == suffixOfHash(hashPassword(userPassword)):
+            return int(count)
+        
+
+    return 0 #return zero if no breches are found 
+
 
 
 
@@ -196,6 +204,9 @@ userPassword = input("Enter a the password you would like checked: ")
 #assign entropy to a variable 
 entropy = entropyCalc(len(userPassword), calcPoolSize(userPassword))
 
+#variable that holds the number of times the password appears in breaches
+known_breaches = check_pwned_passwords(userPassword)
+
 print("")
 print("---------------------------------------------------")
 print("Password Strength: " + str(finalPasswordStrengthCheck(userPassword)))
@@ -207,5 +218,10 @@ print(hashPassword(userPassword))
 print(fiveCharsOfHash(hashPassword(userPassword)))
 print(suffixOfHash(hashPassword(userPassword)))
 print("")
-print(check_pwned_passwords(userPassword))
+
+
+if known_breaches == 0:
+    print("The password you entered has appeard in no breaches")
+else:
+    print("The password you entered has appeard in: " + str(known_breaches) + " breaches")
 
