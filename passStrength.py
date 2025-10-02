@@ -167,6 +167,7 @@ def finalPasswordStrengthCheck(password):
     if checkForCommonPass(password):
         return "Weak"
 
+    entropy = entropyCalc(len(password), calcPoolSize(password))
 
     if entropy <= 28:
         return "Weak"
@@ -195,31 +196,5 @@ def weakness(password):
 
 
 
-#--------------------MAIN------------------------------------------------------------
 
-userPassword = input("Enter a the password you would like checked: ")
-
-#assign entropy to a variable 
-entropy = entropyCalc(len(userPassword), calcPoolSize(userPassword))
-
-#variable that holds the number of times the password appears in breaches
-known_breaches = check_pwned_passwords(userPassword)
-
-print("")
-print("---------------------------------------------------")
-print("Password Strength: " + str(finalPasswordStrengthCheck(userPassword)))
-print("Missing: "+ str(weakness(userPassword)))
-print(f"Estimated Entropy: {entropy:.2f} bits")
-print(checkForCommonPass(userPassword))
-print("---------------------------------------------------")
-print(hashPassword(userPassword))
-print(fiveCharsOfHash(hashPassword(userPassword)))
-print(suffixOfHash(hashPassword(userPassword)))
-print("")
-
-
-if known_breaches == 0:
-    print("The password you entered has appeard in no breaches")
-else:
-    print("The password you entered has appeard in: " + str(known_breaches) + " breaches")
 
