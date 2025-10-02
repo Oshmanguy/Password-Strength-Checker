@@ -91,10 +91,8 @@ def checkForCommonPass(userPassword):
 
 
     if userPassword in wordlist: #lookup of O(1) instead of for loop 
-        print("IS ON LIST")
         return True
     else:
-        print("IS NOT ON LIST")
         return False
     
 

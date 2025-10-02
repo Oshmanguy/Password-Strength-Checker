@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from passStrength import finalPasswordStrengthCheck, weakness, entropyCalc, calcPoolSize
+from passStrength import finalPasswordStrengthCheck, weakness, entropyCalc, calcPoolSize, check_pwned_passwords, checkForCommonPass
 
 class PasswordCheckerApp:
 
@@ -29,11 +29,30 @@ class PasswordCheckerApp:
         entropy = entropyCalc(len(password), calcPoolSize(password))
         password_strength = finalPasswordStrengthCheck(password)
         missing_in_pass = weakness(password)
+        known_breaches = check_pwned_passwords(password)
+        is_common = checkForCommonPass(password)
+
+
+        #check if common
+        if is_common:
+            common_pass_info = "Your password is common"
+        else:
+            common_pass_info = "Your password is not common"
+
+        #check for known_breaches 
+        if known_breaches == 0:
+            breach_info = "The password you entered has appeared in no breaches"
+        else:
+            breach_info = f"The password you entered has appeared in {known_breaches} breaches"
+
+
 
         self.result.configure(
-            text=f"Strength: {password_strength}\nEntropy: {entropy:.2f} bits\nMissing: {missing_in_pass}"
+            text=f"Strength: {password_strength}\nEntropy: {entropy:.2f} bits\nMissing: {missing_in_pass}\n{breach_info}\n{common_pass_info}"
 
         )
+
+    
 
 
 
